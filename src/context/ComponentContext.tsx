@@ -10,7 +10,7 @@ import type { FixedHeightMessageProps } from '../components/Message/FixedHeightM
 import type { MessageUIComponentProps, PinIndicatorProps } from '../components/Message/types';
 import type { MessageDeletedProps } from '../components/Message/MessageDeleted';
 import type { GiphyPreviewMessageProps } from '../components/MessageList/GiphyPreviewMessage';
-import type { MessageListNotificationsProps } from '../components/MessageList/MessageList';
+import type { MessageListNotificationsProps } from '../components/MessageList/MessageListNotifications';
 import type { MessageNotificationProps } from '../components/MessageList/MessageNotification';
 import type { MessageOptionsProps } from '../components/Message/MessageOptions';
 import type { CooldownTimerProps } from '../components/MessageInput/hooks/useCooldownTimer';
@@ -127,13 +127,11 @@ export const useComponentContext = <
   const contextValue = useContext(ComponentContext);
 
   if (!contextValue) {
-    if (process.env.NODE_ENV === 'test') {
-      return {} as ComponentContextValue<At, Ch, Co, Ev, Me, Re, Us, V>;
-    }
-
-    throw new Error(
+    console.warn(
       `The useComponentContext hook was called outside of the ComponentContext provider. Make sure this hook is called within a child of the Channel component. The errored call is located in the ${componentName} component.`,
     );
+
+    return {} as ComponentContextValue<At, Ch, Co, Ev, Me, Re, Us, V>;
   }
 
   return contextValue as ComponentContextValue<At, Ch, Co, Ev, Me, Re, Us, V>;
